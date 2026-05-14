@@ -23,7 +23,7 @@ export default function WeatherBadge({ onWeatherChange }) {
         if (onWeatherChange) onWeatherChange(weather);
       })
       .catch(() => {});
-  }, []);
+  });
 
   if (!wx) return null;
 

@@ -67,7 +67,6 @@ export default function EmergencyPanel({ onRouteDrawn, onClose }) {
   const [fromLocation, setFromLocation] = useState("");
   const [emergencyType, setEmergencyType] = useState("hospital");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null);
 
   const handleDispatch = async () => {
     const from = DELHI_LOCATIONS.find((l) => l.name === fromLocation);
