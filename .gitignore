@@ -1,8 +1,8 @@
 cat > .gitignore << 'EOF'
 venv/
 __pycache__/
-*.pkl
 *.pyc
-model/data/
 .env
+**/.DS_Store
+.DS_Store
 EOF

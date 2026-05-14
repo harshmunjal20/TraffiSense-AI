@@ -1,73 +1,106 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Polyline, Tooltip, LayersControl, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { getHeatmap } from '../api';
+import React, { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Tooltip,
+  LayersControl,
+  useMap,
+} from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 const { BaseLayer } = LayersControl;
 
 const TILES = {
   street: {
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    url: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+    attribution: "&copy; OpenStreetMap &copy; CARTO",
   },
   satellite: {
-    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attribution: '&copy; Esri &copy; satellite providers',
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution: "&copy; Esri &copy; satellite providers",
   },
 };
 
-const ROAD_PATHS = {
-  1:  [ [28.6350,77.2140],[28.6330,77.2160],[28.6315,77.2167],[28.6300,77.2180],[28.6280,77.2200] ], // Connaught Place
-  2:  [ [28.6150,77.2270],[28.6140,77.2285],[28.6129,77.2295],[28.6115,77.2310],[28.6100,77.2330] ], // India Gate
-  3:  [ [28.4980,77.0860],[28.4970,77.0870],[28.4959,77.0882],[28.4945,77.0895],[28.4930,77.0910] ], // Cyber Hub
-  4:  [ [28.5580,77.0970],[28.5572,77.0983],[28.5562,77.1000],[28.5550,77.1015],[28.5535,77.1030] ], // IGI Airport
-  5:  [ [28.6300,77.3620],[28.6290,77.3635],[28.6280,77.3649],[28.6268,77.3663],[28.6255,77.3678] ], // Sector 62 Noida
-  6:  [ [28.4815,77.0785],[28.4805,77.0795],[28.4794,77.0806],[28.4780,77.0820],[28.4765,77.0835] ], // MG Road
-  7:  [ [28.6150,77.2750],[28.6140,77.2762],[28.6127,77.2773],[28.6112,77.2785],[28.6095,77.2800] ], // Akshardham
-  8:  [ [28.5965,77.3025],[28.5955,77.3038],[28.5942,77.3053],[28.5928,77.3068],[28.5912,77.3082] ], // DND Flyway
-  9:  [ [28.5925,77.4270],[28.5913,77.4285],[28.5900,77.4300],[28.5885,77.4315],[28.5870,77.4330] ], // Greater Noida West
-  10: [ [28.5698,77.2405],[28.5688,77.2418],[28.5677,77.2430],[28.5663,77.2443],[28.5648,77.2458] ], // Lajpat Nagar
-  11: [ [28.6540,77.1885],[28.6530,77.1897],[28.6519,77.1909],[28.6505,77.1922],[28.6490,77.1936] ], // Karol Bagh
-  12: [ [28.5532,77.0540],[28.5522,77.0552],[28.5511,77.0565],[28.5498,77.0578],[28.5483,77.0592] ], // Dwarka
-  13: [ [28.5728,77.3215],[28.5718,77.3228],[28.5706,77.3240],[28.5692,77.3253],[28.5678,77.3268] ], // Sector 18 Noida
-  14: [ [28.5658,77.3315],[28.5648,77.3328],[28.5636,77.3340],[28.5622,77.3353],[28.5608,77.3368] ], // Botanical Garden
-  15: [ [28.6482,77.3365],[28.6472,77.3378],[28.6460,77.3390],[28.6446,77.3403],[28.6430,77.3418] ], // Vaishali
-  16: [ [28.4692,77.5005],[28.4682,77.5018],[28.4671,77.5030],[28.4657,77.5043],[28.4642,77.5058] ], // Pari Chowk
-};
+const ROAD_SEGMENTS = [
+  { id: 1,  name: "Connaught Place",   from: [28.635, 77.205],  to: [28.628, 77.228] },
+  { id: 2,  name: "India Gate",        from: [28.62,  77.215],  to: [28.605, 77.24]  },
+  { id: 3,  name: "Cyber Hub Gurgaon", from: [28.51,  77.065],  to: [28.485, 77.105] },
+  { id: 4,  name: "IGI Airport T3",    from: [28.57,  77.075],  to: [28.545, 77.12]  },
+  { id: 5,  name: "Anand Vihar",       from: [28.66,  77.29],   to: [28.635, 77.34]  },
+  { id: 6,  name: "MG Road Gurgaon",   from: [28.495, 77.06],   to: [28.465, 77.1]   },
+  { id: 7,  name: "Akshardham",        from: [28.625, 77.255],  to: [28.598, 77.3]   },
+  { id: 8,  name: "Mayur Vihar",       from: [28.62,  77.275],  to: [28.595, 77.315] },
+  { id: 9,  name: "Noida Link Road",   from: [28.59,  77.305],  to: [28.555, 77.36]  },
+  { id: 10, name: "Lajpat Nagar",      from: [28.59,  77.22],   to: [28.55,  77.27]  },
+  { id: 11, name: "Karol Bagh",        from: [28.67,  77.165],  to: [28.635, 77.21]  },
+  { id: 12, name: "Dwarka Expressway", from: [28.62,  77.05],   to: [28.53,  77.08]  },
+  { id: 13, name: "Sector 18 Noida",   from: [28.595, 77.3],    to: [28.555, 77.34]  },
+  { id: 14, name: "DND Flyway",        from: [28.59,  77.29],   to: [28.54,  77.32]  },
+  { id: 15, name: "Shahdara",          from: [28.695, 77.26],   to: [28.65,  77.31]  },
+  { id: 16, name: "Mathura Road",      from: [28.61,  77.235],  to: [28.53,  77.26]  },
+];
 
 const getColor = (label) => {
-  if (label === 'Very High') return '#7c3aed';
-  if (label === 'High')      return '#ef4444';
-  if (label === 'Medium')    return '#f97316';
-  return '#22c55e';
+  if (label === "Very High") return "#7c3aed";
+  if (label === "High")      return "#ef4444";
+  if (label === "Medium")    return "#f97316";
+  return "#22c55e";
 };
 
-function RouteLayer({ routeData }) {
+const getWeight = (label) => {
+  if (label === "Very High") return 6;
+  if (label === "High")      return 5;
+  if (label === "Medium")    return 4;
+  return 3;
+};
+
+const getOpacity = (score) => {
+  return 0.25 + (score / 100) * 0.65;
+};
+
+function RouteAutoFit({ activeRoute }) {
   const map = useMap();
-
   useEffect(() => {
-    if (!routeData || !routeData.coords) return;
-    const line = L.polyline(routeData.coords, {
-      color:   routeData.color,
-      weight:  6,
-      opacity: 0.9,
-    }).addTo(map);
-    map.fitBounds(line.getBounds(), { padding: [40, 40] });
-    return () => map.removeLayer(line);
-  }, [routeData, map]);
-
+    if (activeRoute?.coords) {
+      const bounds = L.polyline(activeRoute.coords).getBounds();
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+  }, [activeRoute, map]);
   return null;
 }
 
-export default function MapView({ roads, onRoadSelect, routeData }) {
+export default function MapView({ roads, onRoadSelect, activeRoute }) {
+  const [roadPaths, setRoadPaths] = useState({});
+
+  useEffect(() => {
+    const fetchPaths = async () => {
+      const results = {};
+      await Promise.all(
+        ROAD_SEGMENTS.map(async (seg) => {
+          try {
+            const url = `https://router.project-osrm.org/route/v1/driving/${seg.from[1]},${seg.from[0]};${seg.to[1]},${seg.to[0]}?overview=full&geometries=geojson`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data.routes?.[0]) {
+              results[seg.id] = data.routes[0].geometry.coordinates.map(
+                ([lng, lat]) => [lat, lng],
+              );
+            }
+          } catch (e) {}
+        }),
+      );
+      setRoadPaths(results);
+    };
+    fetchPaths();
+  }, []);
+
   return (
     <MapContainer
-      center={[28.6139, 77.2090]}
-      zoom={11}
-      zoomAnimation={true}
-      markerZoomAnimation={true}
-      style={{ height: '100%', width: '100%' }}
+      center={[28.6139, 77.209]}
+      zoom={12}
+      style={{ height: "100%", width: "100%" }}
     >
       <LayersControl position="topright">
         <BaseLayer checked name="Street">
@@ -78,16 +111,33 @@ export default function MapView({ roads, onRoadSelect, routeData }) {
         </BaseLayer>
       </LayersControl>
 
-      <RouteLayer routeData={routeData} />
+      <RouteAutoFit activeRoute={activeRoute} />
+
+      {activeRoute?.coords && (
+        <>
+          <Polyline
+            positions={activeRoute.coords}
+            pathOptions={{ color: "#000000", weight: 10, opacity: 0.5 }}
+          />
+          <Polyline
+            positions={activeRoute.coords}
+            pathOptions={{ color: activeRoute.color, weight: 6, opacity: 0.95 }}
+          />
+        </>
+      )}
 
       {roads.map((road) => {
-        const path = ROAD_PATHS[road.id];
+        const path = roadPaths[road.id];
         if (!path) return null;
         return (
           <Polyline
             key={road.id}
             positions={path}
-            pathOptions={{ color: getColor(road.congestion_label), weight: 6, opacity: 0.85 }}
+            pathOptions={{
+              color: getColor(road.congestion_label),
+              weight: getWeight(road.congestion_label),
+              opacity: getOpacity(road.congestion_score),
+            }}
             eventHandlers={{ click: () => onRoadSelect(road) }}
           >
             <Tooltip sticky>

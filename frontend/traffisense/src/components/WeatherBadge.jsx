@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 const WX_ICONS = { 0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️', 45:'🌫️', 48:'🌫️', 51:'🌦️', 61:'🌧️', 63:'🌧️', 65:'🌧️', 80:'🌦️', 95:'⛈️' };
 
+const WX_ICONS_NIGHT = { 0:'🌙', 1:'🌙', 2:'☁️', 3:'☁️', 45:'🌫️', 48:'🌫️', 51:'🌧️', 61:'🌧️', 63:'🌧️', 65:'🌧️', 80:'🌧️', 95:'⛈️' };
+
+const getIcon = (code, hour) => {
+  const isNight = hour >= 20 || hour <= 5;
+  if (isNight) return WX_ICONS_NIGHT[code] || '🌙';
+  return WX_ICONS[code] || '🌡️';
+};
+
 export default function WeatherBadge({ onWeatherChange }) {
   const [wx, setWx] = useState(null);
 
@@ -18,7 +26,9 @@ export default function WeatherBadge({ onWeatherChange }) {
   }, []);
 
   if (!wx) return null;
-  const icon = WX_ICONS[wx.code] || '🌡️';
+
+  const hour = new Date().getHours();
+  const icon = getIcon(wx.code, hour);
   const isRain = [51,61,63,65,80,95].includes(wx.code);
 
   return (
