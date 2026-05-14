@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { getHeatmap } from '../api';
+import React from 'react';
 
 const labelColor = (label) => {
-  if (label === 'High') return '#ef4444';
-  if (label === 'Medium') return '#f97316';
+  if (label === 'Very High') return '#7c3aed';
+  if (label === 'High')      return '#ef4444';
+  if (label === 'Medium')    return '#f97316';
   return '#22c55e';
 };
 
-export default function HighRiskZones() {
-  const [zones, setZones] = useState([]);
+const labelRank = (label) => {
+  if (label === 'Very High') return 4;
+  if (label === 'High')      return 3;
+  if (label === 'Medium')    return 2;
+  return 1;
+};
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await getHeatmap();
-      const sorted = data.sort((a, b) => b.congestion_score - a.congestion_score).slice(0, 5);
-      setZones(sorted);
-    };
-    fetch();
-    const interval = setInterval(fetch, 30000);
-    return () => clearInterval(interval);
-  }, []);
+export default function HighRiskZones({ roads = [] }) {
+  const zones = [...roads]
+    .sort((a, b) => labelRank(b.congestion_label) - labelRank(a.congestion_label) || b.congestion_score - a.congestion_score)
+    .slice(0, 5);
 
   return (
     <div className="widget">
