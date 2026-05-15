@@ -2,13 +2,30 @@
 
 > **Live Demo:** [traffi-sense-ai.vercel.app](https://traffi-sense-ai.vercel.app)
 
-A real-time AI-powered traffic prediction and smart route planning system for Delhi NCR, built for the CodeCamp Hackathon.
+A real-time AI-powered traffic prediction and smart route planning system for Delhi NCR, built for the Hackzilla 2.0 Hackathon.
+
+---
+
+# 🎥 Project Presentation & Demo
+
+## 📺 YouTube Demo
+Watch the complete demo of **TraffiSense AI** here:
+
+[▶ Watch on YouTube](https://your-youtube-link-here)
+
+---
+
+## 📊 Project PPT / Presentation
+View the complete project presentation here:
+
+[📄 Open PPT Presentation](https://your-ppt-link-here)
 
 ---
 
 ## Problem Statement
 
 Delhi's traffic congestion costs commuters hours daily. Existing solutions lack predictive intelligence — they react to congestion rather than forecast it. TraffiSense AI uses machine learning to predict congestion 60 minutes ahead, enabling smarter commute decisions.
+
 
 ---
 
