@@ -215,35 +215,6 @@ export default function EmergencyPanel({ onRouteDrawn, onClose }) {
         {loading ? "Finding nearest..." : "🚨 Dispatch Emergency Route"}
       </button>
 
-      {result && (
-        <div
-          style={{
-            marginTop: "14px",
-            padding: "12px",
-            borderRadius: "8px",
-            background: "#0f0f23",
-            border: "1px solid #ff4444",
-          }}
-        >
-          <div
-            style={{
-              color: "#ff4444",
-              fontWeight: "bold",
-              marginBottom: "6px",
-            }}
-          >
-            {result.type === "hospital" ? "🏥" : "🔥"} Nearest:{" "}
-            {result.facility}
-          </div>
-          <div style={{ color: "#fff", fontSize: "13px" }}>
-            ETA: <b>{result.duration} min</b> &nbsp;|&nbsp; Distance:{" "}
-            <b>{result.distance} km</b>
-          </div>
-          <div style={{ color: "#aaa", fontSize: "11px", marginTop: "4px" }}>
-            Priority route cleared on map
-          </div>
-        </div>
-      )}
     </div>
   );
 }
