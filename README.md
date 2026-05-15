@@ -152,4 +152,7 @@ TraffiSense-AI/
 
 ## Team
 
+Harsh Munjal (Lead)
+Abdullah Jami
+
 Built with ❤️ during a 21-hour hackathon.
