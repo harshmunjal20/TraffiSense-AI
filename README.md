@@ -6,16 +6,16 @@ A real-time AI-powered traffic prediction and smart route planning system for De
 
 ---
 
-# 🎥 Project Presentation & Demo
+# Project Presentation & Demo
 
-## 📺 YouTube Demo
+## YouTube Demo
 Watch the complete demo of **TraffiSense AI** here:
 
 [▶ Watch on YouTube](https://your-youtube-link-here)
 
 ---
 
-## 📊 Project PPT / Presentation
+## Project PPT / Presentation
 View the complete project presentation here:
 
 [📄 Open PPT Presentation](https://your-ppt-link-here)
