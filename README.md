@@ -11,14 +11,14 @@ A real-time AI-powered traffic prediction and smart route planning system for De
 ## YouTube Demo
 Watch the complete demo of **TraffiSense AI** here:
 
-[Watch on YouTube]([https://your-youtube-link-here](https://www.youtube.com/watch?v=v4n-PM5K--s))
+[Watch on YouTube](https://your-youtube-link-here](https://www.youtube.com/watch?v=v4n-PM5K--s))
 
 ---
 
 ## Project PPT / Presentation
 View the complete project presentation here:
 
-[Open PPT Presentation]([https://your-ppt-link-here](https://onedrive.live.com/:p:/g/personal/5b3c02b9b1582b49/IQAlcuVsgwleTqXr_Ncx4gWGAdYtixWbJMG7Np4R65cVUR8?rtime=JVjGJTmy3kg&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy81YjNjMDJiOWIxNTgyYjQ5L0lRQWxjdVZzZ3dsZVRxWHJfTmN4NGdXR0FkWXRpeFdiSk1HN05wNFI2NWNWVVI4P2U9bDRFaHZY))
+[Open PPT Presentation](https://your-ppt-link-here](https://onedrive.live.com/:p:/g/personal/5b3c02b9b1582b49/IQAlcuVsgwleTqXr_Ncx4gWGAdYtixWbJMG7Np4R65cVUR8?rtime=JVjGJTmy3kg&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy81YjNjMDJiOWIxNTgyYjQ5L0lRQWxjdVZzZ3dsZVRxWHJfTmN4NGdXR0FkWXRpeFdiSk1HN05wNFI2NWNWVVI4P2U9bDRFaHZY)
 
 ---
 
