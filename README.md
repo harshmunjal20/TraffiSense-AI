@@ -12,7 +12,7 @@ Delhi's traffic congestion costs commuters hours daily. Existing solutions lack 
 
 ---
 
-## ⚡ Features
+## Features
 
 ### Live Congestion Heatmap
 - 16 road segments across Delhi NCR color-coded in real time
@@ -42,7 +42,7 @@ Delhi's traffic congestion costs commuters hours daily. Existing solutions lack 
 - Finds nearest facility and draws priority red route
 - Covers 6 hospitals and 6 fire stations across Delhi NCR
 
-### 📊 High Risk Zones & Live Alerts
+### High Risk Zones & Live Alerts
 - Top 5 most congested roads ranked by model score
 - Automatic alerts when any road hits High or Very High congestion
 
@@ -153,9 +153,3 @@ TraffiSense-AI/
 ## Team
 
 Built with ❤️ during a 21-hour hackathon.
-
----
-
-## 📄 License
-
-MIT
